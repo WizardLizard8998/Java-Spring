@@ -30,8 +30,7 @@ public class Brand {
 	@Column(name = "name")
 	private String name;
 	
-	// veritabanından gelen verileri 
-	// requestler ile eşlemek MAPPİNG 
+	
 	
 	
 	
