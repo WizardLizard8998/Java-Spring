@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import kodlama.io.rentACar.business.abstracts.BrandService;
 import kodlama.io.rentACar.core.utilities.mappers.ModelMapperService;
@@ -70,7 +71,7 @@ public class BrandManager  implements BrandService{
 
 
 	@Override
-	public void add(CreateBrandRequest createBrandRequest) {
+	public void add( CreateBrandRequest createBrandRequest) {
 		
 		Brand brand = this.modelMapperService.forRequest()
 				.map(createBrandRequest, Brand.class); //mapledikten sonra 
@@ -78,6 +79,7 @@ public class BrandManager  implements BrandService{
 		//brand.setName(createBrandRequest.getName()); maplenmeden önce
 		
 		this.brandRepository.save(brand);
+		
 		
 	}
 

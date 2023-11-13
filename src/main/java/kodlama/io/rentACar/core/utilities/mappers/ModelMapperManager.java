@@ -35,7 +35,7 @@ public class ModelMapperManager implements ModelMapperService{
 
 		this.modelMapper.getConfiguration()
 		.setAmbiguityIgnored(true)
-		.setMatchingStrategy(MatchingStrategies.LOOSE); // standart olunca tam eşleme yapıyor.
+		.setMatchingStrategy(MatchingStrategies.STANDARD); // standart olunca tam eşleme yapıyor.
 		
 		return this.modelMapper;
 		
