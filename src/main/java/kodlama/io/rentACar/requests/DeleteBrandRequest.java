@@ -7,10 +7,9 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class UpdateBrandRequest {
+public class DeleteBrandRequest {
 
 	private int id; 
-	private String name;
 	
 	
 }

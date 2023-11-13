@@ -11,12 +11,15 @@ import kodlama.io.rentACar.core.utilities.mappers.ModelMapperService;
 import kodlama.io.rentACar.dataAccess.abstracts.BrandRepository;
 import kodlama.io.rentACar.entities.concretes.Brand;
 import kodlama.io.rentACar.requests.CreateBrandRequest;
+import kodlama.io.rentACar.requests.DeleteBrandRequest;
+import kodlama.io.rentACar.requests.UpdateBrandRequest;
 import kodlama.io.rentACar.responses.GetAllBrandsResponse;
+import kodlama.io.rentACar.responses.GetByIdBrandResponse;
 import lombok.AllArgsConstructor;
 
 
-
-@Service // bu class bir servistir ifadesini yükler
+//bu class bir servistir  ifadesini yükler
+@Service 
 @AllArgsConstructor
 
 
@@ -69,6 +72,11 @@ public class BrandManager  implements BrandService{
 		
 	}
 
+	
+	
+	
+	
+	
 
 	@Override
 	public void add( CreateBrandRequest createBrandRequest) {
@@ -82,6 +90,60 @@ public class BrandManager  implements BrandService{
 		
 		
 	}
+
+
+
+
+
+
+
+	@Override
+	public GetByIdBrandResponse getById(int id) {
+		// TODO Auto-generated method stub
+		
+		Brand brand=  this.brandRepository.findById(id).orElseThrow();
+		
+		GetByIdBrandResponse resp = this.modelMapperService.forResponse().map(brand, GetByIdBrandResponse.class);
+		
+		
+		return resp;
+	}
+
+
+
+
+
+
+
+	@Override
+	public void update(UpdateBrandRequest updateBrandRequest) {
+		// TODO Auto-generated method stub
+		
+		Brand brand = this.modelMapperService.forRequest().map(updateBrandRequest, Brand.class);
+		
+			this.brandRepository.save(brand);
+		
+	}
+
+
+
+
+
+
+
+	@Override
+	public void delete(DeleteBrandRequest deleteBrandRequest) {
+		// TODO Auto-generated method stub
+		
+		Brand brand = this.modelMapperService.forRequest().map(deleteBrandRequest, Brand.class);
+		
+		this.brandRepository.delete(brand);
+
+		
+	}
+	
+	
+	
 
 
 
