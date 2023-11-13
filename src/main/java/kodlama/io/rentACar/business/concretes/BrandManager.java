@@ -6,15 +6,12 @@ import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 
 import kodlama.io.rentACar.business.abstracts.BrandService;
-import kodlama.io.rentACar.core.utilities.mappers.ModelMapperManager;
 import kodlama.io.rentACar.core.utilities.mappers.ModelMapperService;
 import kodlama.io.rentACar.dataAccess.abstracts.BrandRepository;
 import kodlama.io.rentACar.entities.concretes.Brand;
 import kodlama.io.rentACar.requests.CreateBrandRequest;
 import kodlama.io.rentACar.responses.GetAllBrandsResponse;
 import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 
 
 

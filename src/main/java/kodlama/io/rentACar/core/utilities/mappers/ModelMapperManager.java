@@ -2,16 +2,20 @@ package kodlama.io.rentACar.core.utilities.mappers;
 
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 
 @Service
 @AllArgsConstructor
-@NoArgsConstructor
+
+@RequiredArgsConstructor
 public class ModelMapperManager implements ModelMapperService{
 
+	@Autowired
 	private ModelMapper modelMapper;
 	
 	@Override
@@ -31,7 +35,7 @@ public class ModelMapperManager implements ModelMapperService{
 
 		this.modelMapper.getConfiguration()
 		.setAmbiguityIgnored(true)
-		.setMatchingStrategy(MatchingStrategies.STANDARD); // standart olunca tam eşleme yapıyor.
+		.setMatchingStrategy(MatchingStrategies.LOOSE); // standart olunca tam eşleme yapıyor.
 		
 		return this.modelMapper;
 		
