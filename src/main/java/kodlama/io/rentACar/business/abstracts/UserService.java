@@ -3,6 +3,8 @@ package kodlama.io.rentACar.business.abstracts;
 
 
 
+import org.springframework.security.core.userdetails.UserDetails;
+
 import kodlama.io.rentACar.requests.CreateUserRequest;
 //import kodlama.io.rentACar.requests.GetByUsernameRequest;
 import kodlama.io.rentACar.responses.GetByUsernameUserResponse;
@@ -19,5 +21,7 @@ public interface UserService {
 	public GetUserResponse get(String username, String password);
 	
 	public GetByUsernameUserResponse getByUsername(String username);
+	
+	public UserDetails getUserForAuth(String username ,String password);
 
 }

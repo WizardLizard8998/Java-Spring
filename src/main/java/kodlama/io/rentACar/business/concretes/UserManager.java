@@ -1,6 +1,7 @@
 package kodlama.io.rentACar.business.concretes;
 
 
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import kodlama.io.rentACar.requests.CreateUserRequest;
@@ -36,6 +37,8 @@ public class UserManager implements UserService {
 		//return null;
 	}
 
+	
+	//not authenticated
 	@Override
 	public GetUserResponse get(String username , String password) {
 		// TODO Auto-generated method stub
@@ -68,6 +71,20 @@ public class UserManager implements UserService {
 		
 		return resp;
 	}
+
+	
+	//this is for generating a jwt token 
+	@Override
+	public UserDetails getUserForAuth(String username, String password) {
+		// TODO Auto-generated method stub
+		
+		UserDetails user = this.userRepository.FindForAuth(username, password); 
+		
+		
+		return user;
+	}
+	
+	
 	
 	
 	
