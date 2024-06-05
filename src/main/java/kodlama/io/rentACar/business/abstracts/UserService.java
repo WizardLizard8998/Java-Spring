@@ -3,6 +3,7 @@ package kodlama.io.rentACar.business.abstracts;
 
 
 
+import kodlama.io.rentACar.entities.concretes.Users;
 import kodlama.io.rentACar.requests.CreateUserRequest;
 //import kodlama.io.rentACar.requests.GetByUsernameRequest;
 import kodlama.io.rentACar.responses.GetByUsernameUserResponse;
@@ -19,5 +20,10 @@ public interface UserService {
 	public GetUserResponse get(String username, String password);
 	
 	public GetByUsernameUserResponse getByUsername(String username);
+	
+	
+	
+	//allah kahretsin 
+	public Users getUserForAuth(String username , String password);
 
 }

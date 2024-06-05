@@ -2,7 +2,7 @@ package kodlama.io.rentACar.core.utilities.jwt;
 
 import io.jsonwebtoken.*;
 import jakarta.servlet.http.HttpServletRequest;
-import kodlama.io.rentACar.entities.concretes.User;
+import kodlama.io.rentACar.entities.concretes.Users;
 
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.stereotype.Component;
@@ -29,8 +29,8 @@ public class JwtUtil {
         this.jwtParser = Jwts.parser().setSigningKey(secret_key);
     }
 
-    public String createToken(User user) {
-        Claims claims = Jwts.claims().setSubject(user.getUsername());
+    public String createToken(Users users) {
+        Claims claims = Jwts.claims().setSubject(users.getUsername());
         Date tokenCreateTime = new Date();
         Date tokenValidity = new Date(tokenCreateTime.getTime() + TimeUnit.MINUTES.toMillis(accessTokenValidity));
         return Jwts.builder()

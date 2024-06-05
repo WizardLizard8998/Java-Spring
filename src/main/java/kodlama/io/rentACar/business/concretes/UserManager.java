@@ -15,7 +15,7 @@ import kodlama.io.rentACar.responses.GetUserResponse;
 import kodlama.io.rentACar.business.abstracts.UserService;
 import kodlama.io.rentACar.core.utilities.mappers.ModelMapperService;
 import kodlama.io.rentACar.dataAccess.abstracts.UserRepository;
-import kodlama.io.rentACar.entities.concretes.User;
+import kodlama.io.rentACar.entities.concretes.Users;
 import lombok.AllArgsConstructor;
 
 @Service
@@ -35,10 +35,10 @@ public class UserManager implements UserService , UserDetailsService{
 	public void add(CreateUserRequest createUserRequest) {
 		// TODO Auto-generated method stub
 		
-		User user = this.modelMapperService.forRequest()
-				.map(createUserRequest, User.class);
+		Users users = this.modelMapperService.forRequest()
+				.map(createUserRequest, Users.class);
 		
-		this.userRepository.save(user);
+		this.userRepository.save(users);
 		
 		
 		//return null;
@@ -47,19 +47,11 @@ public class UserManager implements UserService , UserDetailsService{
 	@Override
 	public GetUserResponse get(String username , String password) {
 		// TODO Auto-generated method stub
-		// opt1 create response type , use it in return value , return response object
-		// opt2 create request  type , use it in parameters , return realG  object
-		// opt3 mix it up and burn in hell 
+
 		
-		
-		
-		
-			
-			User userRes = this.userRepository.FindByUsernamePassword(username,password);
+			Users userRes = this.userRepository.FindByUsernamePassword(username,password);
 			
 			GetUserResponse userResponse = this.modelMapperService.forResponse().map(userRes, GetUserResponse.class);
-			
-
 		
 		
 		return userResponse;
@@ -70,9 +62,9 @@ public class UserManager implements UserService , UserDetailsService{
 	public GetByUsernameUserResponse getByUsername(String username) {
 		// TODO Auto-generated method stub
 		
-		User user = this.userRepository.FindByUsername(username);
+		Users users = this.userRepository.FindByUsername(username);
 		
-		GetByUsernameUserResponse resp = this.modelMapperService.forResponse().map(user, GetByUsernameUserResponse.class);
+		GetByUsernameUserResponse resp = this.modelMapperService.forResponse().map(users, GetByUsernameUserResponse.class);
 		
 		return resp;
 	}
@@ -81,7 +73,7 @@ public class UserManager implements UserService , UserDetailsService{
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		// TODO Auto-generated method stub
 		
-		User user = this.userRepository.FindByUsername(username);
+		Users users = this.userRepository.FindByUsername(username);
 		
 		//roles given here 
 		List<String> roles = new ArrayList<>();
@@ -91,13 +83,23 @@ public class UserManager implements UserService , UserDetailsService{
 								//there is already a imported package user 
 		UserDetails uDetails = org.springframework.security.core.userdetails.User
 								.builder()
-								.username(user.getUsername())
-								.password(user.getPassword())
+								.username(users.getUsername())
+								.password(users.getPassword())
 								.roles(roles.get(0))
 								.build();
 		
 		
 		return uDetails;
+	}
+
+	
+	@Override
+	public Users getUserForAuth(String username, String password) {
+		// TODO Auto-generated method stub
+		
+		Users users = this.userRepository.FindByUsernamePassword(username, password);
+		
+		return users;
 	}
 	
 	
