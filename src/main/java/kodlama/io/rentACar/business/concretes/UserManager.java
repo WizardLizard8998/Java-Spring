@@ -1,6 +1,12 @@
 package kodlama.io.rentACar.business.concretes;
 
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import kodlama.io.rentACar.requests.CreateUserRequest;
@@ -14,7 +20,9 @@ import lombok.AllArgsConstructor;
 
 @Service
 @AllArgsConstructor
-public class UserManager implements UserService {
+
+//multiple inheritance is not allowed in java  but (WTF) however it can implement multiple interfaces
+public class UserManager implements UserService , UserDetailsService{
 	
 	
 	private UserRepository userRepository;
@@ -67,6 +75,29 @@ public class UserManager implements UserService {
 		GetByUsernameUserResponse resp = this.modelMapperService.forResponse().map(user, GetByUsernameUserResponse.class);
 		
 		return resp;
+	}
+
+	@Override
+	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+		// TODO Auto-generated method stub
+		
+		User user = this.userRepository.FindByUsername(username);
+		
+		//roles given here 
+		List<String> roles = new ArrayList<>();
+		
+		roles.add("Admin");
+								
+								//there is already a imported package user 
+		UserDetails uDetails = org.springframework.security.core.userdetails.User
+								.builder()
+								.username(user.getUsername())
+								.password(user.getPassword())
+								.roles(roles.get(0))
+								.build();
+		
+		
+		return uDetails;
 	}
 	
 	
