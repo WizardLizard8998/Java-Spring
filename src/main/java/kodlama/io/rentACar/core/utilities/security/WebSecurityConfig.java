@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -14,8 +15,10 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import kodlama.io.rentACar.business.concretes.UserManager;
+import kodlama.io.rentACar.core.utilities.jwt.JwtAuthorizationFilter;
 
 @Configuration
 @EnableWebSecurity
@@ -23,12 +26,15 @@ public class WebSecurityConfig {
 	
 	private final UserManager uManager;
 	
+	private final JwtAuthorizationFilter jwtAuthFilter;
 	
 	
 	
-	public WebSecurityConfig(UserManager uManager) {
+	
+	public WebSecurityConfig(UserManager uManager, JwtAuthorizationFilter jwtAuthFilter) {
 		
 		this.uManager = uManager;
+		this.jwtAuthFilter = jwtAuthFilter;
 	}
 	
 	
@@ -48,24 +54,31 @@ public class WebSecurityConfig {
 		
 		
 		// authorized some requests (Open api ) to access by all users and some request (endpoints that doing processes on db) to acces not by everyone  
+	/*	
 		http
 			.authorizeHttpRequests(
 					(request) -> 
 							request
-								.requestMatchers("/swagger-ui/**")
-								.anonymous()
-								.requestMatchers("/v3/api-docs/**")
+								.requestMatchers("/api/users/")
 								.anonymous()
 								
-								.requestMatchers("/api/**")
-								.authenticated()
+								.requestMatchers("/api/users/login")
+								.anonymous()
 								
-								/**/
+
 								
 					);
-			
+		http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+		http.addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
+	*/
 		
-		
+		//burada kaldık 
+		http.authorizeRequests()
+		.requestMatchers("/api/users/login")
+		.permitAll()
+		.anyRequest().authenticated()
+		.and()
+		.addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
 			
 		
 		return http.build();
