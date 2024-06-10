@@ -27,7 +27,7 @@ import kodlama.io.rentACar.responses.LoginResponseAuth;
 
 
 @RestController 
-@RequestMapping("/api/users")
+@RequestMapping("/api/users/")
 public class UserController {
 
 	private UserService userService; 
@@ -46,7 +46,7 @@ public class UserController {
 	}
 	
 	
-	@PostMapping()
+	@PostMapping("createuser")
 	@ResponseStatus(code = HttpStatus.CREATED)
 	public void add(@RequestBody CreateUserRequest createUserRequest) {
 		
@@ -55,21 +55,21 @@ public class UserController {
 	}
 	
 	
-	@GetMapping()
+	@GetMapping("getuser")
 	@ResponseStatus(code = HttpStatus.I_AM_A_TEAPOT)
 	public GetUserResponse get( @RequestParam String username, @RequestParam String password) {
 		return this.userService.get(username,password);
 	}
 	
 	
-	@GetMapping("/{username}")
+	@GetMapping("{username}")
 	public GetByUsernameUserResponse getByUsername(@PathVariable String username) {
 		return this.userService.getByUsername(username);
 	}
 	
 	
 	
-	@PostMapping("/login")
+	@PostMapping("login")
 	public LoginResponseAuth login(@RequestBody LoginUserRequest logReq) {
 		
 		
